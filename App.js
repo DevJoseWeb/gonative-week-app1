@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 
 export default class App extends Component {
   state = {
-    nome: '',
+    ballPosY: new Animated.Value(0),
   }
 
-  async componentDidMount() {
-    const nome = await AsyncStorage.getItem('@GoNative:nome');
-    this.setState({ nome });
+  componentDidMount() {
+    Animated.timing(this.state.ballPosY, {
+      toValue: 500,
+      duration: 500,
+    }).start();
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Meu nome é {this.state.nome}</Text>
+        <Animated.View
+          style={[
+            styles.ball,
+            { marginTop: this.state.ballPosY }
+          ]}
+        />
       </View>
     );
   }
@@ -24,8 +31,14 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 20,
   },
+
+  ball: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#f00'
+  }
 });
