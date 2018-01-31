@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
 
 export default class App extends Component {
   state = {
-    latitude: null,
-    longitude: null,
-  };
+    nome: '',
+  }
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      })
-    });
+  async componentDidMount() {
+    const nome = await AsyncStorage.getItem('@GoNative:nome');
+    this.setState({ nome });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Latitude: {this.state.latitude}</Text>
-        <Text>Longitude: {this.state.longitude}</Text>
+        <Text>Meu nome é {this.state.nome}</Text>
       </View>
     );
   }
