@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Share } from 'react-native';
 
 export default class App extends Component {
-  state = {
-    ballPosY: new Animated.Value(0),
-  }
-
   componentDidMount() {
-    Animated.timing(this.state.ballPosY, {
-      toValue: 500,
-      duration: 500,
-    }).start();
+    Share.share({
+      title: 'GoNative Week',
+      message: 'Essa semana da GoNative Week está sendo demais, faça sua inscrição',
+      url: 'http://code.rocketseat.com.br/gonative-week',
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Animated.View
-          style={[
-            styles.ball,
-            { marginTop: this.state.ballPosY }
-          ]}
-        />
       </View>
     );
   }
@@ -34,11 +25,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     padding: 20,
   },
-
-  ball: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#f00'
-  }
 });
